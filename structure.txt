@@ -1,0 +1,24 @@
+                         Character
+                             │
+       ┌─────────────────────┼─────────────────────┐
+       ↓                     ↓                     ↓
+    Warrior                 Mage                 Archer
+       │                     │                     │
+ ┌─────┴─────┐         ┌─────┴─────┐         ┌─────┴─────┐
+ ↓           ↓          ↓           ↓          ↓           ↓
+Sword       Armor      Magic       Mana       Bow        Arrows
+Weapon                  Weapon
+
+Common Attributes:
+- Name
+- Level
+- Health
+- Damage
+- Weapon
+
+Common Methods:
+- ShowInfo()
+- Attack()
+- Defend()
+- Heal()
+- LevelUp()
