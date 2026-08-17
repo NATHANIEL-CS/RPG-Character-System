@@ -63,8 +63,10 @@ class Character{
         cout << "TYPE    : " << GetType() << endl;
     }
 
-    virtual void Attack(){
+    virtual void Attack(Character*my){
+        int Health = 10;
         cout << GetName() << " ATTACKING..." << endl;
+        SetHealth(GetHealth() +Health);
     }
 
     virtual void Defend(){
@@ -87,7 +89,7 @@ class Warrior : public Character{
 
     Warrior(string aName) : Character(aName, 1, 100, 50, "Sword", "Warrior"){}
 
-    void Attack() override{
+    void Attack(Character* enemy) override{
         cout << GetName() << " Warrior swings his sword!..." << endl;
     }
 
@@ -110,7 +112,7 @@ class Mage : public Character{
     public:
 
     Mage(string aName) : Character(aName, 1, 100, 50, "Magic", "Mage"){}
-    void Attack() override{
+    void Attack(Character* enemy) override{
         cout << GetName() << " Mage casts a powerful spell!..." << endl;
     }
 
@@ -133,7 +135,7 @@ class Archer : public Character{
     public:
     Archer(string aName) : Character(aName, 1, 100, 50, "Bow", "Archer"){}
 
-    void Attack() override{
+    void Attack(Character* enemy) override{
         cout << GetName() << " Archer pulls the bow and fires!..." << endl;
     }
 
@@ -152,81 +154,23 @@ class Archer : public Character{
 
 int main()
 {
-    int characters;
-    cout << "HOW MANY CHARCTERS: ";
-    cin >> characters;
-
-    Character** ptrChar = new Character*[characters];
-
-    //TYPES OF CHARACTER
-    cout << "(1)WARRIOR\n(2)MAGE\n(3)ARCHER" << endl;
-    for(int i = 0; i < characters; i++){
-        char characterType;
-        string Name;
-        cout << "\nCHOICE " << i + 1 << ": ";
-        cin >> characterType;
-
-        cout << "NAME: ";
-        cin.ignore();
-        getline(cin, Name);
-
-        if(characterType == '1'){
-            ptrChar[i] = new Warrior(Name);
-        } else if(characterType == '2'){
-            ptrChar[i] = new Mage(Name);
-        } else if(characterType == '3'){
-            ptrChar[i] = new Archer(Name);
-        } else {
-            cout << "INVALID CHOICE" << endl;
-            i--;
-        }
-    }
-
-    for(int i = 0; i < characters; i++){
-        cout << endl;
-        cout << "[" << i + 1 << "]" << endl;
-        ptrChar[i] -> ShowInfo();
-    }
-
-    cout << "=======================================" << endl;
-    cout << "       SELECT CHARACTER" << endl;
-    cout << "=======================================" << endl;
-
-    // SELECT CHARACTER
-    for(int i = 0; i < characters; i++){
-        cout << "(" << i + 1 << ")" << ptrChar[i]->GetName() << endl;
-        // for example:
-        // (1) Garen
-        // (2) Nana
-    }
-
     int select;
-    int choice;
+    Character* ptrWarrior = new Warrior("Garen");
+    Character* ptrMage = new Mage("Nana");
+
+    cout << "YOU" << endl;
+    ptrWarrior->ShowInfo();
+
+    cout << "\nENEMY" << endl;
+    ptrMage->ShowInfo();
+
+    cout << "(1)ATTACK\n(2)DEFEND\n(3)HEAL" << endl;
     cout << "SELECT: ";
     cin >> select;
 
-    int index = select -1;
-
-    cout << "ACTION MENU" << endl;
-    cout << "(1) ATTACK\n(2) DEFEND\n(3) HEAL\n(4) LEVEL UP" << endl;
-    cout << "CHOICE: ";
-    cin >> choice;
-
-    if(choice == 1){
-        ptrChar[index]->Attack();
-    } else if(choice == 2){
-        ptrChar[index]->Defend();
-    } else if(choice == 3){
-        ptrChar[index]->Heal();
-    } else if(choice == 4){
-        ptrChar[index]->LevelUp();
-    } else {
-        cout << "INVALID CHOICE!" << endl;
+    if(select == 1){
+        ptrWarrior->Attack(ptrMage);
+        ptrMage->ShowInfo();
     }
-    for(int i = 0; i < characters; i++){
-        delete ptrChar[i];
-    }
-
-    delete[] ptrChar;
     return 0;
 }
